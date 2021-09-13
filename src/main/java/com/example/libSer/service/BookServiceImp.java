@@ -66,28 +66,4 @@ public class BookServiceImp implements BookService{
         return false;
     }
 
-    @Override
-    public Boolean setUserForBook(User user, Book book) {
-        if(userRepo.existsById(user.getId()) && bookRepo.existsById(book.getId())){
-            user.addBookForUser(book);
-            book.addUserForBook(user);
-            bookRepo.save(book);
-            userRepo.save(user);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public Boolean removeUserFromBook(User user, Book book) {
-        if(userRepo.existsById(user.getId()) && bookRepo.existsById(book.getId())){
-            book.removeUserFromBook(user);
-            user.removeBookFromUser(book);
-            bookRepo.save(book);
-            userRepo.save(user);
-            return true;
-        }
-        return false;
-    }
-
 }
