@@ -4,11 +4,12 @@ import com.example.libSer.domain.Book;
 import com.example.libSer.repos.BookRepo;
 import com.example.libSer.repos.UserRepo;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
-public class BookServiceImp implements BooksService {
+@Service
+public class BookServiceImp implements BookService {
 
     private final BookRepo bookRepo;
     private final UserRepo userRepo;
@@ -18,12 +19,13 @@ public class BookServiceImp implements BooksService {
     }
 
     @Override
-    public void addBook(String bookName, String author, Integer totalBooksCount) {
-
+    public Book addBook(String bookName, String author, Integer totalBooksCount) {
         if(!bookRepo.existsByBookName(bookName)) {
             Book book = new Book(bookName, author, totalBooksCount);
             bookRepo.save(book);
+            return book;
         }
+        return null;
     }
 
     @Override
@@ -33,8 +35,8 @@ public class BookServiceImp implements BooksService {
     }
 
     @Override
-    public Book getBookById(Long id) {
-        return bookRepo.getById(id);
+    public Book getBookById(long id) {
+        return bookRepo.findById(id);
     }
 
     @Override
@@ -43,12 +45,12 @@ public class BookServiceImp implements BooksService {
     }
 
     @Override
-    public Boolean editBook(Long id, String bookName, String author, Integer totalBooksCount) {
+    public Boolean editBook(long id, String bookName, String author, Integer totalBooksCount) {
         if(bookRepo.existsById(id)) {
-            Book book = bookRepo.getById(id);
+            Book book = bookRepo.findById(id);
             book.setBookName(bookName);
             book.setAuthor(author);
-            book.setTotalBooksCount(totalBooksCount);
+            book.setBooksCount(totalBooksCount);
             bookRepo.save(book);
             return true;
         }
@@ -56,7 +58,7 @@ public class BookServiceImp implements BooksService {
     }
 
     @Override
-    public Boolean deleteBook(Long id) {
+    public Boolean deleteBook(long id) {
         if(bookRepo.existsById(id)) {
             bookRepo.deleteById(id);
             return true;

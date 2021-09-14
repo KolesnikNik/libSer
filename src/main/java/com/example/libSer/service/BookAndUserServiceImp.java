@@ -4,9 +4,9 @@ import com.example.libSer.domain.Book;
 import com.example.libSer.domain.User;
 import com.example.libSer.repos.BookRepo;
 import com.example.libSer.repos.UserRepo;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class BookAndUserServiceImp implements BookAndUserService{
 
     private final BookRepo bookRepo;
@@ -18,22 +18,20 @@ public class BookAndUserServiceImp implements BookAndUserService{
     }
 
     @Override
-    public Boolean setUserForBook(User user, Book book) {
-        if(userRepo.existsById(user.getId()) && bookRepo.existsById(book.getId())){
-            user.addBookForUser(book);
-            book.addUserForBook(user);
+    public void setUserForBook(User user, Book book) {
+        //if(userRepo.existsById(user.getId()) && bookRepo.existsById(book.getId())) {
+            book.getUser().add(user);
+            book.setBooksCount(book.getTotalBooksCount()-1);
             bookRepo.save(book);
             userRepo.save(user);
-            return true;
-        }
-        return false;
     }
 
     @Override
     public Boolean removeUserFromBook(User user, Book book) {
         if(userRepo.existsById(user.getId()) && bookRepo.existsById(book.getId())){
-            book.removeUserFromBook(user);
-            user.removeBookFromUser(book);
+            user.getBook().remove(book);
+            //book.getUsers().remove(user);
+            book.setBooksCount(book.getTotalBooksCount()+1);
             bookRepo.save(book);
             userRepo.save(user);
             return true;

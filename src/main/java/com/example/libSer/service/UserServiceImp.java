@@ -4,10 +4,11 @@ import com.example.libSer.domain.User;
 import com.example.libSer.repos.BookRepo;
 import com.example.libSer.repos.UserRepo;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class UserServiceImp implements UserService{
 
     private final BookRepo bookRepo;
@@ -24,18 +25,18 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
-    public User getUserById(Long id) {
-        return userRepo.getById(id);
+    public User getUserById(long id) {
+        return userRepo.findById(id);
     }
 
     @Override
-    public Boolean createUser(String userName, String password) {
+    public User createUser(String userName, String password) {
+        User user = null;
         if(!userRepo.existsByUserName(userName)){
-            User user = new User(userName, password);
+            user = new User(userName, password);
             userRepo.save(user);
-            return true;
         }
-        return false;
+        return user;
     }
 
     @Override

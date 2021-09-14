@@ -1,42 +1,33 @@
 package com.example.libSer.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
+    @SequenceGenerator(name="user_generator", sequenceName = "user_seq", allocationSize=50)
     private Long id;
-    @Column
+    @Column(name = "user_name")
     private String userName;
-    @Column
+    @Column(name = "password")
     private String password;
 
-    @ManyToMany(mappedBy = "users")
-    private List<Book> books;
-
-    public void addBookForUser(Book book){
-        this.books.add(book);
-    }
-    public void removeBookFromUser(Book book){
-        this.books.remove(book.getId());
-    }
+    //@ManyToMany(mappedBy = "users",fetch = FetchType.EAGER)
+    @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable(name = "users_books",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private List<Book> book = new ArrayList<>();
 
     public User() {
     }
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
-    }
-
-    public User(Long id, String userName, String password, List<Book> books) {
-        this.id = id;
-        this.userName = userName;
-        this.password = password;
-        this.books = books;
     }
 
     public Long getId() {
@@ -63,25 +54,12 @@ public class User {
         this.password = password;
     }
 
-    public List<Book> getBooks() {
-        return books;
+    public List<Book> getBook() {
+        return book;
     }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id.equals(user.id) && userName.equals(user.userName) && password.equals(user.password);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, userName, password);
+    public void setBook(List<Book> books) {
+        this.book = books;
     }
 
     @Override

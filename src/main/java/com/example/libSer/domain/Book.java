@@ -1,27 +1,32 @@
 package com.example.libSer.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "books")
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_generator")
+    @SequenceGenerator(name="book_generator", sequenceName = "book_seq", allocationSize=50)
     private Long id;
-    @Column
+    @Column(name = "book_name")
     private String bookName;
-    @Column
+    @Column(name = "author")
     private String author;
-    @Column
+    @Column(name = "total_books_count")
     private Integer totalBooksCount;
-    @Column
+    @Column(name = "books_count")
     private Integer booksCount;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "users_books")
-    private List<User> users;
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_books"
+                ,joinColumns = @JoinColumn(name = "book_id"),
+                inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> user = new ArrayList<>();
+
+
 
     public Book(String bookName, String author, Integer totalBooksCount) {
         this.bookName = bookName;
@@ -30,27 +35,24 @@ public class Book {
         this.booksCount = totalBooksCount;
     }
 
-    public void addUserForBook(User user){
-        this.users.add(user);
-        this.booksCount -= 1;
-
-    }
-    public void removeUserFromBook(User user){
-        this.users.remove(user);
-        this.booksCount += 1;
-    }
-
     public Book() {
     }
 
-    public Book(String bookName, String author, Integer booksCount, List<User> users) {
-        this.bookName = bookName;
-        this.author = author;
-        this.booksCount = booksCount;
-        this.users = users;
+
+    /* @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(bookName, book.bookName) && Objects.equals(author, book.author) && Objects.equals(totalBooksCount, book.totalBooksCount) && Objects.equals(booksCount, book.booksCount);
     }
 
-    public long getId() {
+    @Override
+    public int hashCode() {
+        return Objects.hash(bookName, author, totalBooksCount, booksCount);
+    }*/
+
+    public Long getId() {
         return id;
     }
 
@@ -82,38 +84,16 @@ public class Book {
         this.booksCount = booksCount;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<User> getUser() {
+        return user;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setUser(List<User> users) {
+        this.user = users;
     }
 
     public Integer getTotalBooksCount() {
         return totalBooksCount;
-    }
-
-    public void setTotalBooksCount(Integer totalBooksCount) {
-        this.totalBooksCount = totalBooksCount;
-        this.booksCount = totalBooksCount;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
-        return id.equals(book.id) &&
-                bookName.equals(book.bookName) &&
-                author.equals(book.author) &&
-                totalBooksCount.equals(book.totalBooksCount) &&
-                booksCount.equals(book.booksCount);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, bookName, author, totalBooksCount, booksCount);
     }
 
     @Override

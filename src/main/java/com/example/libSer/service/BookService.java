@@ -1,18 +1,19 @@
 package com.example.libSer.service;
 
 import com.example.libSer.domain.Book;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
-public interface BooksService {
+@Service
+public interface BookService {
     /**
      * Добавляет новую книгу
      * @param bookName - название книги
      * @param author - имя автора книги
      * @param totalBooksCount - количество книг
      */
-    void addBook(String bookName, String author, Integer totalBooksCount);
+    Book addBook(String bookName, String author, Integer totalBooksCount);
 
     /**
      * Возвращает список, имеющихеся книг
@@ -25,7 +26,7 @@ public interface BooksService {
      * @param id - ID книги
      * @return книга по ID
      */
-    Book getBookById(Long id);
+    Book getBookById(long id);
 
     /**
      * Возвращает книгу по её названию.
@@ -42,13 +43,13 @@ public interface BooksService {
      * @param totalBooksCount - новое значение кол-ва книг
      * @return - true если данные были обновлены, иначе false
      */
-    Boolean editBook(Long id, String bookName, String author, Integer totalBooksCount);
+    Boolean editBook(long id, String bookName, String author, Integer totalBooksCount);
 
     /**
      * Удаляет книгу по заданным ID
      * @param id - id книги, которого нужно удалить
      * @return - true если книга была удалена, иначе false
      */
-    Boolean deleteBook(Long id);
+    Boolean deleteBook(long id);
 
 }
