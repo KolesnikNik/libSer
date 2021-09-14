@@ -19,8 +19,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public List<User> getAllUser() {
-        List<User> users = userRepo.findAll();
-        return users;
+        return userRepo.findAll();
     }
 
     @Override
@@ -30,16 +29,13 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User createUser(String userName, String password) {
-        User user = null;
-        if (!userRepo.existsByUserName(userName)) {
-            user = new User(userName, password);
-            userRepo.save(user);
-        }
-        return user;
+
+        return !(userRepo.existsByUserName(userName)) ?
+                userRepo.save(new User(userName, password)) : null;
     }
 
     @Override
-    public Boolean deleteUser(Long id) {
+    public Boolean deleteUser(long id) {
         if (userRepo.existsById(id)) {
             userRepo.deleteById(id);
             return true;

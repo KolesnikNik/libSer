@@ -31,13 +31,16 @@ public interface BookService {
      */
     Book getBookById(long id);
 
+
     /**
      * Возвращает книгу по её названию.
      *
      * @param bookName - название книги
      * @return книга по названию
      */
+    /*
     Book getBookByBookName(String bookName);
+    */
 
     /**
      * Обновляет книгу по ее ID
@@ -45,10 +48,11 @@ public interface BookService {
      * @param id              - id книги, которую нужно обновить
      * @param bookName        - новое имя книги
      * @param author          - новый автор книги
-     * @param totalBooksCount - новое значение кол-ва книг
+     * @param totalBooksCount - новое значение общего кол-ва книг
+     * @param booksCount      - остаток книг
      * @return - true если данные были обновлены, иначе false
      */
-    Boolean editBook(long id, String bookName, String author, Integer totalBooksCount);
+    Boolean editBook(long id, String bookName, String author, int totalBooksCount, int booksCount);
 
     /**
      * Удаляет книгу по заданным ID

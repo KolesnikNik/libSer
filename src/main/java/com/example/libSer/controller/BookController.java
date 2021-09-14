@@ -23,12 +23,41 @@ public class BookController {
     }
 
     @PostMapping("/addBook")
-    public ResponseEntity addBook(@RequestParam String bookName,
-                                  @RequestParam String author,
-                                  @RequestParam Integer totalBooksCount) {
+    public ResponseEntity<Book> addBook(@RequestParam String bookName,
+                                        @RequestParam String author,
+                                        @RequestParam Integer totalBooksCount) {
         Book book = bookService.addBook(bookName, author, totalBooksCount);
         return new ResponseEntity<Book>(book, HttpStatus.OK);
     }
+
+    @PostMapping("/deleteBook")
+    public Boolean deleteBook(@RequestParam int bookId) {
+        return bookService.deleteBook(bookId);
+    }
+
+    @PostMapping("/editBook")
+    public Boolean editBook(@RequestParam int id,
+                            @RequestParam String bookName,
+                            @RequestParam String author,
+                            @RequestParam Integer totalBooksCount,
+                            @RequestParam Integer booksCount) {
+
+        return bookService.editBook(id, bookName, author, totalBooksCount, booksCount);
+    }
+
+    @PostMapping("/book")
+    public ResponseEntity<Book> getBookById(@RequestParam int bookId) {
+        Book book = bookService.getBookById(bookId);
+        return new ResponseEntity<Book>(book, HttpStatus.OK);
+    }
+
+    /*
+    @PostMapping("/book")
+    public ResponseEntity<Book> getBookByBookName(@RequestParam String bookName) {
+        Book book = bookService.getBookByBookName(bookName);
+        return new ResponseEntity<Book>(book, HttpStatus.OK);
+    }
+    */
 
 
 }

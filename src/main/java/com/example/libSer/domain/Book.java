@@ -96,6 +96,10 @@ public class Book {
         return totalBooksCount;
     }
 
+    public void setTotalBooksCount(Integer totalBooksCount) {
+        this.totalBooksCount = totalBooksCount;
+    }
+
     @Override
     public String toString() {
         return "Book{ " +

@@ -35,6 +35,6 @@ public interface UserService {
      *
      * @param id - id пользователя
      */
-    Boolean deleteUser(Long id);
+    Boolean deleteUser(long id);
 
 }

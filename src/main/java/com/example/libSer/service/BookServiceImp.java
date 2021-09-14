@@ -2,8 +2,6 @@ package com.example.libSer.service;
 
 import com.example.libSer.domain.Book;
 import com.example.libSer.repos.BookRepo;
-import com.example.libSer.repos.UserRepo;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,37 +17,39 @@ public class BookServiceImp implements BookService {
 
     @Override
     public Book addBook(String bookName, String author, Integer totalBooksCount) {
-        if (!bookRepo.existsByBookName(bookName)) {
-            Book book = new Book(bookName, author, totalBooksCount);
-            bookRepo.save(book);
-            return book;
-        }
-        return null;
+        return !(bookRepo.existsByBookName(bookName)) ?
+            bookRepo.save(new Book(bookName, author, totalBooksCount)) : null;
     }
 
     @Override
     public List<Book> getAllBook() {
-        List<Book> books = bookRepo.findAll();
-        return books;
+        return bookRepo.findAll();
     }
 
     @Override
     public Book getBookById(long id) {
-        return bookRepo.findById(id);
+        return bookRepo.existsById(id) ? bookRepo.findBookById(id) : null;
     }
 
+    /*
     @Override
     public Book getBookByBookName(String bookName) {
-        return bookRepo.getByBookName(bookName);
+        return bookRepo.existsByBookName(bookName) ?
+                bookRepo.findBookByBookNameLikeBookName(bookName) : null;
     }
+    */
 
+    /**
+     * Хорошо бы написать сюда билдер для иницилиализации нужных полей разом!!!
+     */
     @Override
-    public Boolean editBook(long id, String bookName, String author, Integer totalBooksCount) {
+    public Boolean editBook(long id, String bookName, String author, int totalBooksCount, int setBooksCount) {
         if (bookRepo.existsById(id)) {
             Book book = bookRepo.findById(id);
             book.setBookName(bookName);
             book.setAuthor(author);
-            book.setBooksCount(totalBooksCount);
+            book.setTotalBooksCount(totalBooksCount);
+            book.setBooksCount(setBooksCount);
             bookRepo.save(book);
             return true;
         }

@@ -25,16 +25,21 @@ public class UserController {
     }
 
     @PostMapping("/createUser")
-    public ResponseEntity createUser(@RequestParam String userName,
-                                     @RequestParam String password) {
+    public ResponseEntity<User> createUser(@RequestParam String userName,
+                                           @RequestParam String password) {
         User user = userService.createUser(userName, password);
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
     @PostMapping("/user")
-    public ResponseEntity getUser(@RequestParam int userId) {
+    public ResponseEntity<User> getUser(@RequestParam int userId) {
         User user = userService.getUserById(userId);
         return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+
+    @PostMapping("/deleteUser")
+    public Boolean deleteUser(@RequestParam int userId) {
+        return userService.deleteUser(userId);
     }
 
 }
