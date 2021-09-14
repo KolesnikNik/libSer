@@ -1,30 +1,31 @@
 package com.example.libSer.controller;
 
-import com.example.libSer.domain.Books;
-import com.example.libSer.service.BookService;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.example.libSer.domain.Book;
+import com.example.libSer.service.BooksService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class BooksController {
-    private final BookService bookService;
-    public BooksController(BookService bookService) {
-        this.bookService = bookService;
+    private final BooksService booksService;
+    public BooksController(BooksService booksService) {
+        this.booksService = booksService;
     }
 
     @GetMapping("/")
-    public String greeting() {
-        return "greeting";
+    public List<Book> getAllBooks(){
+        return booksService.getAllBook();
     }
-    @GetMapping("/main")
-    public List<Books> getAllBooks(){
-        return bookService.getAllBooks();
-    }
-    @RequestMapping("/addbook")
-    public void addBook(String bookName, String author, Integer totalBooksCount){
-        bookService.addBooks(bookName, author, totalBooksCount);
+
+        @PostMapping ("/addBook")
+    public ResponseEntity addBook(@RequestParam String bookName,
+                                  @RequestParam String author,
+                                  @RequestParam Integer totalBooksCount){
+        booksService.addBook(bookName, author, totalBooksCount);
+        Book book = new Book(bookName, author, totalBooksCount);
+        return new ResponseEntity<Book>(book, HttpStatus.OK);
     }
 }

@@ -1,6 +1,6 @@
 package com.example.libSer.service;
 
-import com.example.libSer.domain.Users;
+import com.example.libSer.domain.User;
 
 import java.util.List;
 
@@ -9,26 +9,26 @@ public interface UserService {
      * Возвращает список, имеющихеся книг
      * @return список книг
      */
-    List<Users> getAllUsers();
+    List<User> getAllUser();
 
     /**
      * Возвращает пользователя по id
      * @param id - id пользователя
      * @return ользователя
      */
-    Users getUsersById(Long id);
+    User getUserById(Long id);
 
     /**
      * Добавляет новuj пользователя
      * @param userName - имя пользователя
      * @param password - пароль пользователя
      */
-    Boolean createUsers(String userName, String password);
+    Boolean createUser(String userName, String password);
 
     /**
      * Удаляет пользователя
      * @param id - id пользователя
      */
-    Boolean deleteUsers(Long id);
+    Boolean deleteUser(Long id);
 
 }

@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Users {
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -14,25 +15,24 @@ public class Users {
     @Column
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "users_books")
-    private List<Books> books;
+    @ManyToMany(mappedBy = "users")
+    private List<Book> books;
 
-    public void addBookForUser(Books book){
+    public void addBookForUser(Book book){
         this.books.add(book);
     }
-    public void removeBookFromUser(Books book){
+    public void removeBookFromUser(Book book){
         this.books.remove(book.getId());
     }
 
-    public Users() {
+    public User() {
     }
-    public Users(String userName, String password) {
+    public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }
 
-    public Users(Long id, String userName, String password, List<Books> books) {
+    public User(Long id, String userName, String password, List<Book> books) {
         this.id = id;
         this.userName = userName;
         this.password = password;
@@ -63,11 +63,11 @@ public class Users {
         this.password = password;
     }
 
-    public List<Books> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(List<Books> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 
@@ -75,7 +75,7 @@ public class Users {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Users user = (Users) o;
+        User user = (User) o;
         return id.equals(user.id) && userName.equals(user.userName) && password.equals(user.password);
     }
 

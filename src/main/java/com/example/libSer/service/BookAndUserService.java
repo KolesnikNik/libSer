@@ -1,7 +1,7 @@
 package com.example.libSer.service;
 
-import com.example.libSer.domain.Books;
-import com.example.libSer.domain.Users;
+import com.example.libSer.domain.Book;
+import com.example.libSer.domain.User;
 
 
 public interface BookAndUserService {
@@ -11,14 +11,15 @@ public interface BookAndUserService {
      * @param book - книга добавляемая пользователю
      * @return - true если книга была удалена, иначе false
      */
-    Boolean setUsersForBooks(Users user, Books book);
+    Boolean setUserForBook(User user, Book book);
 
     /**
      * Удаляет владельца у книги
      * @param user - пользователь, у которого удаляют книгу
      * @param book - книга удаляемая у пользователя
-     * @return - true если книга была удалена, иначе false
+     * @return - true если книга была
+     * удалена, иначе false
      */
-    Boolean removeUsersFromBooks(Users user, Books book);
+    Boolean removeUserFromBook(User user, Book book);
 
 }

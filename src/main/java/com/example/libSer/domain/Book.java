@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "book")
-public class Books {
+@Table(name = "books")
+public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -21,29 +21,29 @@ public class Books {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_books")
-    private List<Users> users;
+    private List<User> users;
 
-    public Books(String bookName, String author, Integer totalBooksCount) {
+    public Book(String bookName, String author, Integer totalBooksCount) {
         this.bookName = bookName;
         this.author = author;
         this.totalBooksCount = totalBooksCount;
         this.booksCount = totalBooksCount;
     }
 
-    public void addUserForBook(Users user){
+    public void addUserForBook(User user){
         this.users.add(user);
         this.booksCount -= 1;
 
     }
-    public void removeUserFromBook(Users user){
+    public void removeUserFromBook(User user){
         this.users.remove(user);
         this.booksCount += 1;
     }
 
-    public Books() {
+    public Book() {
     }
 
-    public Books(String bookName, String author, Integer booksCount, List<Users> users) {
+    public Book(String bookName, String author, Integer booksCount, List<User> users) {
         this.bookName = bookName;
         this.author = author;
         this.booksCount = booksCount;
@@ -82,11 +82,11 @@ public class Books {
         this.booksCount = booksCount;
     }
 
-    public List<Users> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<Users> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 
@@ -103,7 +103,7 @@ public class Books {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Books book = (Books) o;
+        Book book = (Book) o;
         return id.equals(book.id) &&
                 bookName.equals(book.bookName) &&
                 author.equals(book.author) &&

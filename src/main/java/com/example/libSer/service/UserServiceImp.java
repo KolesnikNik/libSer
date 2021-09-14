@@ -1,8 +1,8 @@
 package com.example.libSer.service;
 
-import com.example.libSer.domain.Users;
-import com.example.libSer.repos.BooksRepo;
-import com.example.libSer.repos.UsersRepo;
+import com.example.libSer.domain.User;
+import com.example.libSer.repos.BookRepo;
+import com.example.libSer.repos.UserRepo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -10,38 +10,38 @@ import java.util.List;
 @Component
 public class UserServiceImp implements UserService{
 
-    private final BooksRepo booksRepo;
-    private final UsersRepo usersRepo;
-    public UserServiceImp(BooksRepo booksRepo, UsersRepo usersRepo) {
-        this.booksRepo = booksRepo;
-        this.usersRepo = usersRepo;
+    private final BookRepo bookRepo;
+    private final UserRepo userRepo;
+    public UserServiceImp(BookRepo bookRepo, UserRepo userRepo) {
+        this.bookRepo = bookRepo;
+        this.userRepo = userRepo;
     }
 
     @Override
-    public List<Users> getAllUsers() {
-        List<Users> users = usersRepo.findAll();
+    public List<User> getAllUser() {
+        List<User> users = userRepo.findAll();
         return users;
     }
 
     @Override
-    public Users getUsersById(Long id) {
-        return usersRepo.getById(id);
+    public User getUserById(Long id) {
+        return userRepo.getById(id);
     }
 
     @Override
-    public Boolean createUsers(String userName, String password) {
-        if(!usersRepo.existsByUserName(userName)){
-            Users user = new Users(userName, password);
-            usersRepo.save(user);
+    public Boolean createUser(String userName, String password) {
+        if(!userRepo.existsByUserName(userName)){
+            User user = new User(userName, password);
+            userRepo.save(user);
             return true;
         }
         return false;
     }
 
     @Override
-    public Boolean deleteUsers(Long id) {
-        if(usersRepo.existsById(id)){
-            usersRepo.deleteById(id);
+    public Boolean deleteUser(Long id) {
+        if(userRepo.existsById(id)){
+            userRepo.deleteById(id);
             return true;
         }
         return false;
