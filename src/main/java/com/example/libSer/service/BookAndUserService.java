@@ -7,20 +7,21 @@ import org.springframework.stereotype.Service;
 @Service
 public interface BookAndUserService {
     /**
-     * Добавляет владельца книги
+     * Добавляет книгу пользователю
+     *
      * @param user - пользователь, которого назначают владельцем
      * @param book - книга добавляемая пользователю
-     * @return - true если книга была удалена, иначе false
+     * @return - true если книга была добавлена, иначе false
      */
-    void setUserForBook(User user, Book book);
+    Boolean setBookToUser(User user, Book book);
 
     /**
-     * Удаляет владельца у книги
+     * Удаляет книги упользователя
+     *
      * @param user - пользователь, у которого удаляют книгу
      * @param book - книга удаляемая у пользователя
-     * @return - true если книга была
-     * удалена, иначе false
+     * @return - true если книга была удалена, иначе false
      */
-    Boolean removeUserFromBook(User user, Book book);
+    Boolean removeBookFromUser(User user, Book book);
 
 }

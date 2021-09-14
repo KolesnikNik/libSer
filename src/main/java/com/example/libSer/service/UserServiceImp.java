@@ -9,12 +9,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserServiceImp implements UserService{
+public class UserServiceImp implements UserService {
 
-    private final BookRepo bookRepo;
     private final UserRepo userRepo;
-    public UserServiceImp(BookRepo bookRepo, UserRepo userRepo) {
-        this.bookRepo = bookRepo;
+
+    public UserServiceImp(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
 
@@ -32,7 +31,7 @@ public class UserServiceImp implements UserService{
     @Override
     public User createUser(String userName, String password) {
         User user = null;
-        if(!userRepo.existsByUserName(userName)){
+        if (!userRepo.existsByUserName(userName)) {
             user = new User(userName, password);
             userRepo.save(user);
         }
@@ -41,7 +40,7 @@ public class UserServiceImp implements UserService{
 
     @Override
     public Boolean deleteUser(Long id) {
-        if(userRepo.existsById(id)){
+        if (userRepo.existsById(id)) {
             userRepo.deleteById(id);
             return true;
         }

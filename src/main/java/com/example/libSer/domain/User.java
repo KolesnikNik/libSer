@@ -3,13 +3,14 @@ package com.example.libSer.domain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
-    @SequenceGenerator(name="user_generator", sequenceName = "user_seq", allocationSize=50)
+    @SequenceGenerator(name = "user_generator", sequenceName = "user_seq", allocationSize = 50)
     private Long id;
     @Column(name = "user_name")
     private String userName;
@@ -17,7 +18,7 @@ public class User {
     private String password;
 
     //@ManyToMany(mappedBy = "users",fetch = FetchType.EAGER)
-    @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "users_books",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
@@ -25,9 +26,23 @@ public class User {
 
     public User() {
     }
+
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userName.equals(user.userName) && password.equals(user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userName, password);
     }
 
     public Long getId() {
@@ -63,7 +78,7 @@ public class User {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "User{ " +
                 "id = " + id +
                 ", name = " + userName;

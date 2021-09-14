@@ -9,12 +9,14 @@ import java.util.List;
 public interface UserService {
     /**
      * Возвращает список, имеющихеся книг
+     *
      * @return список книг
      */
     List<User> getAllUser();
 
     /**
      * Возвращает пользователя по id
+     *
      * @param id - id пользователя
      * @return ользователя
      */
@@ -22,6 +24,7 @@ public interface UserService {
 
     /**
      * Добавляет новuj пользователя
+     *
      * @param userName - имя пользователя
      * @param password - пароль пользователя
      */
@@ -29,6 +32,7 @@ public interface UserService {
 
     /**
      * Удаляет пользователя
+     *
      * @param id - id пользователя
      */
     Boolean deleteUser(Long id);

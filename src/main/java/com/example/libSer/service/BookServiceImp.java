@@ -12,15 +12,14 @@ import java.util.List;
 public class BookServiceImp implements BookService {
 
     private final BookRepo bookRepo;
-    private final UserRepo userRepo;
-    public BookServiceImp(BookRepo bookRepo, UserRepo userRepo) {
+
+    public BookServiceImp(BookRepo bookRepo) {
         this.bookRepo = bookRepo;
-        this.userRepo = userRepo;
     }
 
     @Override
     public Book addBook(String bookName, String author, Integer totalBooksCount) {
-        if(!bookRepo.existsByBookName(bookName)) {
+        if (!bookRepo.existsByBookName(bookName)) {
             Book book = new Book(bookName, author, totalBooksCount);
             bookRepo.save(book);
             return book;
@@ -46,7 +45,7 @@ public class BookServiceImp implements BookService {
 
     @Override
     public Boolean editBook(long id, String bookName, String author, Integer totalBooksCount) {
-        if(bookRepo.existsById(id)) {
+        if (bookRepo.existsById(id)) {
             Book book = bookRepo.findById(id);
             book.setBookName(bookName);
             book.setAuthor(author);
@@ -59,7 +58,7 @@ public class BookServiceImp implements BookService {
 
     @Override
     public Boolean deleteBook(long id) {
-        if(bookRepo.existsById(id)) {
+        if (bookRepo.existsById(id)) {
             bookRepo.deleteById(id);
             return true;
         }

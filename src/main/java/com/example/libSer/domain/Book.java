@@ -3,13 +3,14 @@ package com.example.libSer.domain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_generator")
-    @SequenceGenerator(name="book_generator", sequenceName = "book_seq", allocationSize=50)
+    @SequenceGenerator(name = "book_generator", sequenceName = "book_seq", allocationSize = 50)
     private Long id;
     @Column(name = "book_name")
     private String bookName;
@@ -20,12 +21,11 @@ public class Book {
     @Column(name = "books_count")
     private Integer booksCount;
 
-    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "users_books"
-                ,joinColumns = @JoinColumn(name = "book_id"),
-                inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_books",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> user = new ArrayList<>();
-
 
 
     public Book(String bookName, String author, Integer totalBooksCount) {
@@ -39,7 +39,7 @@ public class Book {
     }
 
 
-    /* @Override
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -50,7 +50,7 @@ public class Book {
     @Override
     public int hashCode() {
         return Objects.hash(bookName, author, totalBooksCount, booksCount);
-    }*/
+    }
 
     public Long getId() {
         return id;
@@ -97,7 +97,7 @@ public class Book {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Book{ " +
                 "id = " + id +
                 ", name = " + bookName +
