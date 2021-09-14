@@ -1,10 +1,9 @@
 package com.example.libSer.service;
 
-import com.example.libSer.domain.Book;
-import com.example.libSer.domain.User;
-import org.springframework.stereotype.Service;
+import com.example.libSer.domain.Books;
+import com.example.libSer.domain.Users;
 
-@Service
+
 public interface BookAndUserService {
     /**
      * Добавляет владельца книги
@@ -12,7 +11,7 @@ public interface BookAndUserService {
      * @param book - книга добавляемая пользователю
      * @return - true если книга была удалена, иначе false
      */
-    Boolean setUserForBook(User user, Book book);
+    Boolean setUsersForBooks(Users user, Books book);
 
     /**
      * Удаляет владельца у книги
@@ -20,6 +19,6 @@ public interface BookAndUserService {
      * @param book - книга удаляемая у пользователя
      * @return - true если книга была удалена, иначе false
      */
-    Boolean removeUserFromBook(User user, Book book);
+    Boolean removeUsersFromBooks(Users user, Books book);
 
 }

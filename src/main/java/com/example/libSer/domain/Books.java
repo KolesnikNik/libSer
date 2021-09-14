@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "books")
-public class Book {
+@Table(name = "book")
+public class Books {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -19,33 +19,31 @@ public class Book {
     @Column
     private Integer booksCount;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "usr_books",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private List<User> users;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "users_books")
+    private List<Users> users;
 
-    public Book(String bookName, String author, Integer totalBooksCount) {
+    public Books(String bookName, String author, Integer totalBooksCount) {
         this.bookName = bookName;
         this.author = author;
         this.totalBooksCount = totalBooksCount;
         this.booksCount = totalBooksCount;
     }
 
-    public void addUserForBook(User user){
+    public void addUserForBook(Users user){
         this.users.add(user);
         this.booksCount -= 1;
 
     }
-    public void removeUserFromBook(User user){
+    public void removeUserFromBook(Users user){
         this.users.remove(user);
         this.booksCount += 1;
     }
 
-    public Book() {
+    public Books() {
     }
 
-    public Book(String bookName, String author, Integer booksCount, List<User> users) {
+    public Books(String bookName, String author, Integer booksCount, List<Users> users) {
         this.bookName = bookName;
         this.author = author;
         this.booksCount = booksCount;
@@ -84,11 +82,11 @@ public class Book {
         this.booksCount = booksCount;
     }
 
-    public List<User> getUsers() {
+    public List<Users> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<Users> users) {
         this.users = users;
     }
 
@@ -105,7 +103,7 @@ public class Book {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
+        Books book = (Books) o;
         return id.equals(book.id) &&
                 bookName.equals(book.bookName) &&
                 author.equals(book.author) &&

@@ -1,48 +1,47 @@
 package com.example.libSer.service;
 
-import com.example.libSer.domain.Book;
-import com.example.libSer.domain.User;
-import com.example.libSer.repos.BookRepo;
-import com.example.libSer.repos.UserRepo;
-import org.springframework.stereotype.Service;
+import com.example.libSer.domain.Users;
+import com.example.libSer.repos.BooksRepo;
+import com.example.libSer.repos.UsersRepo;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Service
+@Component
 public class UserServiceImp implements UserService{
 
-    private final BookRepo bookRepo;
-    private final UserRepo userRepo;
-    public UserServiceImp(BookRepo bookRepo, UserRepo userRepo) {
-        this.bookRepo = bookRepo;
-        this.userRepo = userRepo;
+    private final BooksRepo booksRepo;
+    private final UsersRepo usersRepo;
+    public UserServiceImp(BooksRepo booksRepo, UsersRepo usersRepo) {
+        this.booksRepo = booksRepo;
+        this.usersRepo = usersRepo;
     }
 
     @Override
-    public List<User> getAllUsers() {
-        List<User> users = userRepo.getAll();
+    public List<Users> getAllUsers() {
+        List<Users> users = usersRepo.findAll();
         return users;
     }
 
     @Override
-    public User getUserById(Long id) {
-        return userRepo.getById(id);
+    public Users getUsersById(Long id) {
+        return usersRepo.getById(id);
     }
 
     @Override
-    public Boolean createUser(String userName, String password) {
-        if(!userRepo.existsByUserName(userName)){
-            User user = new User(userName, password);
-            userRepo.save(user);
+    public Boolean createUsers(String userName, String password) {
+        if(!usersRepo.existsByUserName(userName)){
+            Users user = new Users(userName, password);
+            usersRepo.save(user);
             return true;
         }
         return false;
     }
 
     @Override
-    public Boolean deleteUser(Long id) {
-        if(userRepo.existsById(id)){
-            userRepo.deleteById(id);
+    public Boolean deleteUsers(Long id) {
+        if(usersRepo.existsById(id)){
+            usersRepo.deleteById(id);
             return true;
         }
         return false;

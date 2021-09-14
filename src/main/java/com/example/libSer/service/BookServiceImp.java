@@ -1,66 +1,65 @@
 package com.example.libSer.service;
 
-import com.example.libSer.domain.Book;
-import com.example.libSer.domain.User;
-import com.example.libSer.repos.BookRepo;
-import com.example.libSer.repos.UserRepo;
-import org.springframework.stereotype.Service;
+import com.example.libSer.domain.Books;
+import com.example.libSer.repos.BooksRepo;
+import com.example.libSer.repos.UsersRepo;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Service
+@Component
 public class BookServiceImp implements BookService{
 
-    private final BookRepo bookRepo;
-    private final UserRepo userRepo;
-    public BookServiceImp(BookRepo bookRepo, UserRepo userRepo) {
-        this.bookRepo = bookRepo;
-        this.userRepo = userRepo;
+    private final BooksRepo booksRepo;
+    private final UsersRepo usersRepo;
+    public BookServiceImp(BooksRepo booksRepo, UsersRepo usersRepo) {
+        this.booksRepo = booksRepo;
+        this.usersRepo = usersRepo;
     }
 
     @Override
-    public Boolean addBook(String bookName, String author, Integer totalBooksCount) {
-        if(!bookRepo.existsByBookName(bookName)) {
-            Book book = new Book(bookName, author, totalBooksCount);
-            bookRepo.save(book);
+    public Boolean addBooks(String bookName, String author, Integer totalBooksCount) {
+        if(!booksRepo.existsByBookName(bookName)) {
+            Books book = new Books(bookName, author, totalBooksCount);
+            booksRepo.save(book);
             return true;
         }
         return false;
     }
 
     @Override
-    public List<Book> getAllBooks() {
-        List<Book> books = bookRepo.getAll();
+    public List<Books> getAllBooks() {
+        List<Books> books = booksRepo.findAll();
         return books;
     }
 
     @Override
-    public Book getBookById(Long id) {
-        return bookRepo.getById(id);
+    public Books getBooksById(Long id) {
+        return booksRepo.getById(id);
     }
 
     @Override
-    public Book getBookByBookName(String bookName) {
-        return bookRepo.getByBookName(bookName);
+    public Books getBooksByBookName(String bookName) {
+        return booksRepo.getByBookName(bookName);
     }
 
     @Override
-    public Boolean editBook(Long id, String bookName, String author, Integer totalBooksCount) {
-        if(bookRepo.existsById(id)) {
-            Book book = bookRepo.getById(id);
+    public Boolean editBooks(Long id, String bookName, String author, Integer totalBooksCount) {
+        if(booksRepo.existsById(id)) {
+            Books book = booksRepo.getById(id);
             book.setBookName(bookName);
             book.setAuthor(author);
             book.setTotalBooksCount(totalBooksCount);
-            bookRepo.save(book);
+            booksRepo.save(book);
             return true;
         }
         return false;
     }
 
     @Override
-    public Boolean deleteBook(Long id) {
-        if(bookRepo.existsById(id)) {
-            bookRepo.deleteById(id);
+    public Boolean deleteBooks(Long id) {
+        if(booksRepo.existsById(id)) {
+            booksRepo.deleteById(id);
             return true;
         }
         return false;

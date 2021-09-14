@@ -1,39 +1,41 @@
 package com.example.libSer.service;
 
-import com.example.libSer.domain.Book;
-import com.example.libSer.domain.User;
-import com.example.libSer.repos.BookRepo;
-import com.example.libSer.repos.UserRepo;
+import com.example.libSer.domain.Books;
+import com.example.libSer.domain.Users;
+import com.example.libSer.repos.BooksRepo;
+import com.example.libSer.repos.UsersRepo;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BookAndUserServiceImp implements BookAndUserService{
 
-    private final BookRepo bookRepo;
-    private final UserRepo userRepo;
+    private final BooksRepo booksRepo;
+    private final UsersRepo usersRepo;
 
-    public BookAndUserServiceImp(BookRepo bookRepo, UserRepo userRepo) {
-        this.bookRepo = bookRepo;
-        this.userRepo = userRepo;
+    public BookAndUserServiceImp(BooksRepo booksRepo, UsersRepo usersRepo) {
+        this.booksRepo = booksRepo;
+        this.usersRepo = usersRepo;
     }
 
     @Override
-    public Boolean setUserForBook(User user, Book book) {
-        if(userRepo.existsById(user.getId()) && bookRepo.existsById(book.getId())){
+    public Boolean setUsersForBooks(Users user, Books book) {
+        if(usersRepo.existsById(user.getId()) && booksRepo.existsById(book.getId())){
             user.addBookForUser(book);
             book.addUserForBook(user);
-            bookRepo.save(book);
-            userRepo.save(user);
+            booksRepo.save(book);
+            usersRepo.save(user);
             return true;
         }
         return false;
     }
 
     @Override
-    public Boolean removeUserFromBook(User user, Book book) {
-        if(userRepo.existsById(user.getId()) && bookRepo.existsById(book.getId())){
+    public Boolean removeUsersFromBooks(Users user, Books book) {
+        if(usersRepo.existsById(user.getId()) && booksRepo.existsById(book.getId())){
             book.removeUserFromBook(user);
             user.removeBookFromUser(book);
-            bookRepo.save(book);
-            userRepo.save(user);
+            booksRepo.save(book);
+            usersRepo.save(user);
             return true;
         }
         return false;
