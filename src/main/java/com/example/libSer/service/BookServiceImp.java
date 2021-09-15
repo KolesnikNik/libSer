@@ -31,13 +31,13 @@ public class BookServiceImp implements BookService {
         return bookRepo.existsById(id) ? bookRepo.findBookById(id) : null;
     }
 
-    /*
+
     @Override
     public Book getBookByBookName(String bookName) {
         return bookRepo.existsByBookName(bookName) ?
-                bookRepo.findBookByBookNameLikeBookName(bookName) : null;
+                bookRepo.getBookByBookName(bookName) : null;
     }
-    */
+
 
     /**
      * Хорошо бы написать сюда билдер для иницилиализации нужных полей разом!!!
@@ -45,7 +45,7 @@ public class BookServiceImp implements BookService {
     @Override
     public Boolean editBook(long id, String bookName, String author, int totalBooksCount, int setBooksCount) {
         if (bookRepo.existsById(id)) {
-            Book book = bookRepo.findById(id);
+            Book book = bookRepo.findBookById(id);
             book.setBookName(bookName);
             book.setAuthor(author);
             book.setTotalBooksCount(totalBooksCount);

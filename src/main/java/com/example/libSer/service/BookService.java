@@ -38,9 +38,9 @@ public interface BookService {
      * @param bookName - название книги
      * @return книга по названию
      */
-    /*
+
     Book getBookByBookName(String bookName);
-    */
+
 
     /**
      * Обновляет книгу по ее ID

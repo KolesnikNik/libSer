@@ -45,19 +45,19 @@ public class BookController {
         return bookService.editBook(id, bookName, author, totalBooksCount, booksCount);
     }
 
-    @PostMapping("/book")
+    @PostMapping("/bookId")
     public ResponseEntity<Book> getBookById(@RequestParam int bookId) {
         Book book = bookService.getBookById(bookId);
         return new ResponseEntity<Book>(book, HttpStatus.OK);
     }
 
-    /*
-    @PostMapping("/book")
+
+    @PostMapping("/bookName")
     public ResponseEntity<Book> getBookByBookName(@RequestParam String bookName) {
         Book book = bookService.getBookByBookName(bookName);
         return new ResponseEntity<Book>(book, HttpStatus.OK);
     }
-    */
+
 
 
 }
