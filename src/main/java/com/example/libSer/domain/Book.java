@@ -9,8 +9,8 @@ import java.util.Objects;
 @Table(name = "books")
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_generator")
-    @SequenceGenerator(name = "book_generator", sequenceName = "book_seq", allocationSize = 50)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     @Column(name = "book_name")
     private String bookName;
@@ -25,7 +25,7 @@ public class Book {
     @JoinTable(name = "users_books",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> user = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
 
     public Book(String bookName, String author, Integer totalBooksCount) {
@@ -85,11 +85,11 @@ public class Book {
     }
 
     public List<User> getUser() {
-        return user;
+        return users;
     }
 
     public void setUser(List<User> users) {
-        this.user = users;
+        this.users = users;
     }
 
     public Integer getTotalBooksCount() {

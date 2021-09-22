@@ -24,7 +24,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User getUserById(long id) {
-        return userRepo.findById(id);
+        return userRepo.existsById(id) ? userRepo.findById(id) : null;
     }
 
     @Override

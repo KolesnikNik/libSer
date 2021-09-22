@@ -4,24 +4,28 @@ import com.example.libSer.domain.Book;
 import com.example.libSer.domain.User;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public interface BookAndUserService {
     /**
      * Добавляет книгу пользователю
      *
-     * @param user - пользователь, которого назначают владельцем
-     * @param book - книга добавляемая пользователю
+     * @param userId - ID пользователь, которого назначают владельцем
+     * @param bookId - ID книга добавляемая пользователю
      * @return - true если книга была добавлена, иначе false
      */
-    Boolean setBookToUser(User user, Book book);
+    @Transactional
+    Boolean setBookToUser(long userId, long bookId);
 
     /**
      * Удаляет книги упользователя
      *
-     * @param user - пользователь, у которого удаляют книгу
-     * @param book - книга удаляемая у пользователя
+     * @param userId - ID пользователь, у которого удаляют книгу
+     * @param bookId - ID книга удаляемая у пользователя
      * @return - true если книга была удалена, иначе false
      */
-    Boolean removeBookFromUser(User user, Book book);
+    @Transactional
+    Boolean removeBookFromUser(long userId, long bookId);
 
 }

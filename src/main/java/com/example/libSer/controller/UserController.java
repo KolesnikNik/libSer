@@ -4,14 +4,12 @@ import com.example.libSer.domain.User;
 import com.example.libSer.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/Users")
 public class UserController {
     private final UserService userService;
 
@@ -19,8 +17,8 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/allUsers")
-    public List<User> getAllBooks() {
+    @GetMapping
+    public List<User> getAllUsers() {
         return userService.getAllUser();
     }
 
@@ -31,14 +29,13 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/user")
-    public ResponseEntity<User> getUser(@RequestParam int userId) {
-        User user = userService.getUserById(userId);
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+    @GetMapping("/{userId}")
+    public User getUser(@PathVariable long userId) {
+        return userService.getUserById(userId);
     }
 
-    @PostMapping("/deleteUser")
-    public Boolean deleteUser(@RequestParam int userId) {
+    @DeleteMapping("/{userId}")
+    public Boolean deleteUser(@PathVariable long userId) {
         return userService.deleteUser(userId);
     }
 

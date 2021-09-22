@@ -7,30 +7,24 @@ import com.example.libSer.service.BookService;
 import com.example.libSer.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class AddReaderController {
 
-    private final UserService userService;
-    private final BookService bookService;
     private final BookAndUserService bookAndUserService;
 
-    public AddReaderController(UserService userService, BookService bookService, BookAndUserService bookAndUserService) {
-        this.userService = userService;
-        this.bookService = bookService;
+    public AddReaderController(BookAndUserService bookAndUserService) {
         this.bookAndUserService = bookAndUserService;
     }
 
     @PostMapping("/addUserOrBook")
-    public Boolean addBookToUser(@RequestParam int userId, @RequestParam int bookId) {
-        User user = userService.getUserById(userId);
-        Book book = bookService.getBookById(bookId);
-        return bookAndUserService.setBookToUser(user, book);
+    public Boolean addBookToUser(@RequestParam long userId, @RequestParam long bookId) {
+        return bookAndUserService.setBookToUser(userId, bookId);
     }
 
     @PostMapping("/removeUserOrBook")
-    public Boolean removeBookFromUser(@RequestParam int userId, @RequestParam int bookId) {
-        User user = userService.getUserById(userId);
-        Book book = bookService.getBookById(bookId);
-        return bookAndUserService.removeBookFromUser(user, book);
+    public Boolean removeBookFromUser(@RequestParam long userId, @RequestParam long bookId) {
+        return bookAndUserService.removeBookFromUser(userId, bookId);
     }
 }

@@ -17,8 +17,9 @@ public class BookServiceImp implements BookService {
 
     @Override
     public Book addBook(String bookName, String author, Integer totalBooksCount) {
+        Book book = new Book(bookName, author, totalBooksCount);
         return !(bookRepo.existsByBookName(bookName)) ?
-            bookRepo.save(new Book(bookName, author, totalBooksCount)) : null;
+            bookRepo.save(book) : null;
     }
 
     @Override
@@ -39,9 +40,6 @@ public class BookServiceImp implements BookService {
     }
 
 
-    /**
-     * Хорошо бы написать сюда билдер для иницилиализации нужных полей разом!!!
-     */
     @Override
     public Boolean editBook(long id, String bookName, String author, int totalBooksCount, int setBooksCount) {
         if (bookRepo.existsById(id)) {

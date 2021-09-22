@@ -9,20 +9,19 @@ import java.util.Objects;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
-    @SequenceGenerator(name = "user_generator", sequenceName = "user_seq", allocationSize = 50)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     @Column(name = "user_name")
     private String userName;
     @Column(name = "password")
     private String password;
 
-    //@ManyToMany(mappedBy = "users",fetch = FetchType.EAGER)
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "users_books",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private List<Book> book = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
 
     public User() {
     }
@@ -70,11 +69,11 @@ public class User {
     }
 
     public List<Book> getBook() {
-        return book;
+        return books;
     }
 
     public void setBook(List<Book> books) {
-        this.book = books;
+        this.books = books;
     }
 
     @Override

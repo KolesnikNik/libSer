@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/Books")
 public class BookController {
 
     private final BookService bookService;
@@ -17,7 +18,7 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping("/books")
+    @GetMapping
     public List<Book> getAllBooks() {
         return bookService.getAllBook();
     }
@@ -30,34 +31,33 @@ public class BookController {
         return new ResponseEntity<Book>(book, HttpStatus.OK);
     }
 
-    @PostMapping("/deleteBook")
-    public Boolean deleteBook(@RequestParam int bookId) {
+    @DeleteMapping("/{bookId}")
+    public Boolean deleteBook(@PathVariable int bookId) {
         return bookService.deleteBook(bookId);
     }
 
-    @PostMapping("/editBook")
-    public Boolean editBook(@RequestParam int id,
-                            @RequestParam String bookName,
-                            @RequestParam String author,
-                            @RequestParam Integer totalBooksCount,
-                            @RequestParam Integer booksCount) {
-
-        return bookService.editBook(id, bookName, author, totalBooksCount, booksCount);
-    }
-
-    @PostMapping("/bookId")
-    public ResponseEntity<Book> getBookById(@RequestParam int bookId) {
-        Book book = bookService.getBookById(bookId);
+    @PatchMapping("/editBook")
+    public ResponseEntity<Book> editBook(@RequestParam int bookId,
+                                         @RequestParam String bookName,
+                                         @RequestParam String author,
+                                         @RequestParam Integer totalBooksCount,
+                                         @RequestParam Integer booksCount) {
+        Book book = null;
+        if (bookService.editBook(bookId, bookName, author, totalBooksCount, booksCount))
+            book = bookService.getBookById(bookId);
         return new ResponseEntity<Book>(book, HttpStatus.OK);
     }
 
-
-    @PostMapping("/bookName")
-    public ResponseEntity<Book> getBookByBookName(@RequestParam String bookName) {
-        Book book = bookService.getBookByBookName(bookName);
-        return new ResponseEntity<Book>(book, HttpStatus.OK);
+    @GetMapping("/{bookId}")
+    public Book getBookById(@PathVariable long bookId) {
+        return bookService.getBookById(bookId);
     }
 
+
+    @GetMapping("/bookName/{name}")
+    public Book getBookByBookName(@PathVariable(name = "name") String name) {
+        return bookService.getBookByBookName(name);
+    }
 
 
 }
