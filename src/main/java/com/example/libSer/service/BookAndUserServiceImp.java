@@ -21,7 +21,7 @@ public class BookAndUserServiceImp implements BookAndUserService {
     public Boolean setBookToUser(long userId, long bookId) {
 
         if (userRepo.existsById(userId) && bookRepo.existsById(bookId)) {
-            User user = userRepo.findById(userId);
+            User user = userRepo.findUserById(userId);
             Book book = bookRepo.findBookById(bookId);
             user.getBook().add(book);
             book.setBooksCount(book.getBooksCount() - 1);
@@ -35,7 +35,7 @@ public class BookAndUserServiceImp implements BookAndUserService {
     @Override
     public Boolean removeBookFromUser(long userId, long bookId) {
         if (userRepo.existsById(userId) && bookRepo.existsById(bookId)) {
-            User user = userRepo.findById(userId);
+            User user = userRepo.findUserById(userId);
             Book book = bookRepo.findBookById(bookId);
             user.getBook().remove(book);
             book.getUser().remove(user);
